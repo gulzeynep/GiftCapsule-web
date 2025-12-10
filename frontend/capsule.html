@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaman Kapsülü - GiftCapsule</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background-color: #9CBBFC;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white bg-opacity-10 backdrop-blur-sm border-b border-white border-opacity-20 relative z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-xl md:text-2xl font-bold text-yellow-50">
+                    GiftCapsule
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex gap-6">
+                    <a href="gift.html" class="text-yellow-50 hover:text-blue-800 transition font-medium">Hediye Gönder</a>
+                    <a href="capsule.html" class="text-yellow-50 font-semibold">Zaman Kapsülü</a>
+                    <a href="musicjar.html" class="text-yellow-50 hover:text-blue-800 transition font-medium">MusicJar</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn"
+                    class="md:hidden text-yellow-50 focus:outline-none p-2 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu"
+                class="hidden md:hidden absolute top-full left-0 w-full bg-[#8baaf0] backdrop-blur-md shadow-xl border-t border-white border-opacity-20">
+                <div class="flex flex-col p-4 space-y-4">
+                    <a href="gift.html"
+                        class="text-yellow-50 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition font-medium block">
+                        🎁 Hediye Gönder
+                    </a>
+                    <a href="capsule.html"
+                        class="text-yellow-50 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition font-medium block">
+                        ⏳ Zaman Kapsülü
+                    </a>
+                    <a href="musicjar.html"
+                        class="text-yellow-50 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition font-medium block">
+                        🎵 MusicJar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-6 md:py-8 max-w-2xl">
+        <div class="bg-blue-100 rounded-2xl shadow-xl p-4 md:p-6 lg:p-8">
+            <h1 class="text-2xl md:text-3xl font-bold text-blue-800 mb-2 text-center">
+                ⏰ Zaman Kapsülü Oluştur
+            </h1>
+            <p class="text-sm md:text-base text-blue-600 text-center mb-6 md:mb-8">
+                Gelecekteki kendinize veya sevdiklerinize mesaj bırakın
+            </p>
+
+            <!-- Capsule Form -->
+            <form id="capsuleForm" class="space-y-4 md:space-y-6">
+
+                <!-- Creator Email -->
+                <div>
+                    <label class="block text-blue-800 font-semibold mb-2 text-sm md:text-base">E-posta Adresiniz</label>
+                    <input type="email" id="creator_email" required
+                           class="w-full px-3 md:px-4 py-2 text-sm md:text-base border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="ornek@email.com">
+                    <p class="text-xs md:text-sm text-blue-600 mt-1">
+                        Kapsül oluşturulduğunda onay e-postası alacaksınız
+                    </p>
+                </div>
+
+                <!-- Title -->
+                <div>
+                    <label class="block text-blue-800 font-semibold mb-2 text-sm md:text-base">Kapsül Başlığı</label>
+                    <input type="text" id="title" required
+                           class="w-full px-3 md:px-4 py-2 text-sm md:text-base border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="örn: 2025 Hedeflerim, Gelecekteki Bana...">
+                </div>
+
+                <!-- Message -->
+                <div>
+                    <label class="block text-blue-800 font-semibold mb-2 text-sm md:text-base">Mesajınız</label>
+                    <textarea id="message" required rows="6"
+                              class="w-full px-3 md:px-4 py-2 text-sm md:text-base border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              placeholder="Gelecekte kendinize veya sevdiklerinize ne söylemek istersiniz?"></textarea>
+                </div>
+
+                <!-- Media URL (Optional) -->
+                <div>
+                    <label class="block text-blue-800 font-semibold mb-2 text-sm md:text-base">
+                        Medya Bağlantısı (Opsiyonel)
+                    </label>
+                    <input type="url" id="media_url"
+                           class="w-full px-3 md:px-4 py-2 text-sm md:text-base border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           placeholder="https://example.com/resim.jpg">
+                    <p class="text-xs md:text-sm text-blue-600 mt-1">
+                        Fotoğraf, video veya ses kaydı bağlantısı ekleyebilirsiniz
+                    </p>
+                </div>
+
+                <!-- Open Date -->
+                <div>
+                    <label class="block text-blue-800 font-semibold mb-2 text-sm md:text-base">Açılış Tarihi</label>
+                    <input type="datetime-local" id="open_date" required
+                           class="w-full px-3 md:px-4 py-2 text-sm md:text-base border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p class="text-xs md:text-sm text-blue-600 mt-1">
+                        Kapsülünüz bu tarihte açılabilir olacak
+                    </p>
+                </div>
+
+                <!-- Quick Date Buttons -->
+                <div class="border-t pt-4">
+                    <p class="text-xs md:text-sm text-blue-800 font-semibold mb-2">Hızlı Tarih Seçimi:</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                        <button type="button" onclick="setQuickDate(7)"
+                                class="px-2 md:px-3 py-2 bg-blue-200 text-blue-800 rounded-lg hover:bg-blue-300 transition text-xs md:text-sm">
+                            1 Hafta
+                        </button>
+                        <button type="button" onclick="setQuickDate(30)"
+                                class="px-2 md:px-3 py-2 bg-blue-200 text-blue-800 rounded-lg hover:bg-blue-300 transition text-xs md:text-sm">
+                            1 Ay
+                        </button>
+                        <button type="button" onclick="setQuickDate(180)"
+                                class="px-2 md:px-3 py-2 bg-blue-200 text-blue-800 rounded-lg hover:bg-blue-300 transition text-xs md:text-sm">
+                            6 Ay
+                        </button>
+                        <button type="button" onclick="setQuickDate(365)"
+                                class="px-2 md:px-3 py-2 bg-blue-200 text-blue-800 rounded-lg hover:bg-blue-300 transition text-xs md:text-sm">
+                            1 Yıl
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submitBtn"
+                        class="w-full bg-blue-800 text-yellow-50 py-2.5 md:py-3 rounded-lg font-semibold hover:bg-blue-900 transition text-sm md:text-base">
+                    Zaman Kapsülü Oluştur
+                </button>
+
+            </form>
+
+            <!-- Success Message (Hidden by default) -->
+            <div id="successMessage" class="hidden mt-4 md:mt-6 p-3 md:p-4 bg-green-100 border border-green-400 rounded-lg">
+                <h3 class="font-bold text-green-800 mb-2 text-sm md:text-base">Zaman Kapsülünüz Oluşturuldu!</h3>
+                <p class="text-sm md:text-base text-green-700 mb-2">
+                    Kapsülünüz başarıyla kaydedildi. E-posta adresinize onay mesajı gönderildi.
+                </p>
+                <p class="text-xs md:text-sm text-green-700 mb-4">
+                    Kapsülünüz <strong id="openDateDisplay"></strong> tarihinde açılabilir olacak.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a id="viewCapsuleLink" href="#" target="_blank"
+                       class="flex-1 text-center bg-green-600 text-white px-3 md:px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm md:text-base">
+                        Kapsülü Görüntüle
+                    </a>
+                    <button id="copyCapsuleLinkBtn" onclick="copyCapsuleLink()"
+                            class="flex-1 bg-blue-800 text-yellow-50 px-3 md:px-4 py-2 rounded-lg hover:bg-blue-900 transition text-sm md:text-base">
+                        📋 Linki Kopyala
+                    </button>
+                </div>
+                <p id="copyCapsuleSuccess" class="hidden text-green-700 text-xs md:text-sm mt-2 text-center">✓ Link kopyalandı!</p>
+            </div>
+
+            <!-- Error Message (Hidden by default) -->
+            <div id="errorMessage" class="hidden mt-4 md:mt-6 p-3 md:p-4 bg-red-100 border border-red-400 rounded-lg">
+                <h3 class="font-bold text-red-800 mb-2 text-sm md:text-base">Hata!</h3>
+                <p id="errorText" class="text-sm md:text-base text-red-700"></p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+
+    <!-- Quick Date Function -->
+    <script>
+        function setQuickDate(days) {
+            const now = new Date();
+            now.setDate(now.getDate() + days);
+
+            // Format for datetime-local input
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+
+            document.getElementById('open_date').value = `${year}-${month}-${day}T${hours}:${minutes}`;
+        }
+
+        // Set minimum date to current date
+        window.addEventListener('DOMContentLoaded', () => {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+
+            document.getElementById('open_date').min = `${year}-${month}-${day}T${hours}:${minutes}`;
+        });
+    </script>
+
+    <script src="scripts/capsule.js"></script>
+</body>
+</html>

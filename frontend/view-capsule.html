@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaman Kapsülü - GiftCapsule</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background-color: #9CBBFC;
+        }
+        @keyframes unlock {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        .unlock-animation {
+            animation: unlock 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white bg-opacity-10 backdrop-blur-sm border-b border-white border-opacity-20 relative z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-xl md:text-2xl font-bold text-yellow-50">
+                    GiftCapsule
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex gap-6">
+                    <a href="gift.html" class="text-yellow-50 hover:text-blue-800 transition font-medium">Hediye Gönder</a>
+                    <a href="capsule.html" class="text-yellow-50 hover:text-blue-800 transition font-medium">Zaman Kapsülü</a>
+                    <a href="musicjar.html" class="text-yellow-50 hover:text-blue-800 transition font-medium">MusicJar</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn"
+                    class="md:hidden text-yellow-50 focus:outline-none p-2 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu"
+                class="hidden md:hidden absolute top-full left-0 w-full bg-[#8baaf0] backdrop-blur-md shadow-xl border-t border-white border-opacity-20">
+                <div class="flex flex-col p-4 space-y-4">
+                    <a href="gift.html"
+                        class="text-yellow-50 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition font-medium block">
+                        🎁 Hediye Gönder
+                    </a>
+                    <a href="capsule.html"
+                        class="text-yellow-50 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition font-medium block">
+                        ⏳ Zaman Kapsülü
+                    </a>
+                    <a href="musicjar.html"
+                        class="text-yellow-50 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition font-medium block">
+                        🎵 MusicJar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="container mx-auto px-4 py-8 md:py-16 text-center">
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 max-w-md mx-auto">
+            <div class="animate-spin rounded-full h-12 w-12 md:h-16 md:w-16 border-b-4 border-blue-800 mx-auto mb-4"></div>
+            <p class="text-sm md:text-base text-gray-600">Kapsülünüz yükleniyor...</p>
+        </div>
+    </div>
+
+    <!-- Locked State (Kapsül henüz açılamaz) -->
+    <div id="lockedState" class="hidden container mx-auto px-4 py-8 md:py-16 text-center max-w-2xl">
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 lg:p-12">
+            <div class="text-6xl md:text-8xl mb-4 md:mb-6 unlock-animation">🔒</div>
+            <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-3 md:mb-4">
+                Bu Kapsül Henüz Açılamaz
+            </h1>
+            <p class="text-base md:text-lg text-gray-700 mb-4 md:mb-6">
+                Zaman kapsülünüz belirtilen tarihte açılabilir olacak.
+            </p>
+            <div class="bg-blue-50 rounded-lg p-4 md:p-6 mb-4 md:mb-6">
+                <p class="text-gray-700 mb-2 text-sm md:text-base">
+                    <strong>Kapsül Başlığı:</strong>
+                </p>
+                <p id="lockedTitle" class="text-lg md:text-xl font-semibold text-blue-800 mb-3 md:mb-4 break-words"></p>
+                <p class="text-gray-700 mb-2 text-sm md:text-base">
+                    <strong>Açılış Tarihi:</strong>
+                </p>
+                <p id="lockedDate" class="text-xl md:text-2xl font-bold text-blue-900"></p>
+            </div>
+            <p class="text-sm md:text-base text-gray-600">
+                ⏰ Lütfen belirlenen tarihi bekleyin ve tekrar gelin!
+            </p>
+        </div>
+    </div>
+
+    <!-- Unlocked State (Kapsül açılabilir) -->
+    <div id="unlockedState" class="hidden container mx-auto px-4 py-6 md:py-8 max-w-3xl">
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 lg:p-12">
+
+            <!-- Header -->
+            <div class="text-center mb-6 md:mb-8">
+                <div class="text-5xl md:text-6xl mb-3 md:mb-4">🎉</div>
+                <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-2">
+                    Zaman Kapsülünüz Açıldı!
+                </h1>
+                <p id="capsuleTitle" class="text-lg md:text-xl text-blue-800 font-semibold break-words"></p>
+            </div>
+
+            <!-- Created Date -->
+            <div class="text-center mb-4 md:mb-6">
+                <span class="inline-block bg-blue-100 px-3 md:px-4 py-2 rounded-full text-xs md:text-sm text-blue-800">
+                    📅 <span id="createdDate"></span> tarihinde oluşturuldu
+                </span>
+            </div>
+
+            <!-- Message -->
+            <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-4 md:p-6 mb-4 md:mb-6">
+                <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-3">💌 Mesajınız:</h3>
+                <p id="capsuleMessage" class="text-gray-800 text-base md:text-lg leading-relaxed whitespace-pre-wrap break-words"></p>
+            </div>
+
+            <!-- Media (if exists) -->
+            <div id="mediaSection" class="hidden mb-4 md:mb-6">
+                <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-3">🖼 Medya:</h3>
+                <div class="bg-gray-100 rounded-lg p-3 md:p-4">
+                    <a id="mediaLink" href="#" target="_blank" class="text-blue-800 hover:text-blue-900 break-all text-sm md:text-base">
+
+                    </a>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-6 md:mt-8 pt-4 md:pt-6 border-t border-gray-200">
+                <p class="text-gray-600 text-xs md:text-sm">
+                    Açılış Tarihi: <strong id="openDate"></strong>
+                </p>
+                <p class="text-xs text-gray-500 mt-2">
+                    GiftCapsule ile geleceğe mesaj gönderin
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Error State -->
+    <div id="errorState" class="hidden container mx-auto px-4 py-8 md:py-16 text-center">
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 max-w-md mx-auto">
+            <div class="text-5xl md:text-6xl mb-4">😢</div>
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-2">Kapsül Bulunamadı</h2>
+            <p id="errorMessage" class="text-sm md:text-base text-gray-600">
+                Üzgünüz, bu kapsül bulunamadı veya bir hata oluştu.
+            </p>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+
+    <script>
+        // Get capsule ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const capsuleId = urlParams.get('id');
+
+        if (!capsuleId) {
+            showError('Kapsül ID\'si bulunamadı');
+        } else {
+            checkAndLoadCapsule(capsuleId);
+        }
+
+        async function checkAndLoadCapsule(id) {
+            try {
+                console.log('Checking capsule:', id);
+
+                // First check if capsule can be opened
+                const checkResponse = await fetch(`http://localhost:5000/api/capsules/check/${id}`);
+                console.log('Check response status:', checkResponse.status);
+
+                if (!checkResponse.ok) {
+                    const errorData = await checkResponse.json().catch(() => ({}));
+                    console.error('Check error:', errorData);
+                    throw new Error(errorData.error || 'Kapsül bulunamadı');
+                }
+
+                const checkData = await checkResponse.json();
+                console.log('Check data:', checkData);
+
+                // Get full capsule data
+                const capsuleResponse = await fetch(`http://localhost:5000/api/capsules/${id}`);
+                console.log('Capsule response status:', capsuleResponse.status);
+
+                if (!capsuleResponse.ok) {
+                    const errorData = await capsuleResponse.json().catch(() => ({}));
+                    console.error('Capsule error:', errorData);
+                    throw new Error(errorData.error || 'Kapsül verileri alınamadı');
+                }
+
+                const capsule = await capsuleResponse.json();
+                console.log('Capsule data:', capsule);
+
+                // Hide loading
+                document.getElementById('loadingState').classList.add('hidden');
+
+                if (!checkData.can_open) {
+                    // Show locked state
+                    console.log('Showing locked state');
+                    showLockedState(capsule, checkData.open_date);
+                } else {
+                    // Show unlocked state
+                    console.log('Showing unlocked state');
+                    showUnlockedState(capsule);
+
+                    // Mark as opened
+                    await fetch(`http://localhost:5000/api/capsules/${id}/open`, {
+                        method: 'PUT'
+                    });
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showError(error.message);
+            }
+        }
+
+        function showLockedState(capsule, openDate) {
+            const date = new Date(openDate);
+            const formattedDate = date.toLocaleDateString('tr-TR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            document.getElementById('lockedTitle').textContent = capsule.title;
+            document.getElementById('lockedDate').textContent = formattedDate;
+            document.getElementById('lockedState').classList.remove('hidden');
+        }
+
+        function showUnlockedState(capsule) {
+            // Populate capsule data
+            document.getElementById('capsuleTitle').textContent = capsule.title;
+            document.getElementById('capsuleMessage').textContent = capsule.message;
+
+            // Format dates
+            const createdDate = new Date(capsule.created_at);
+            document.getElementById('createdDate').textContent = createdDate.toLocaleDateString('tr-TR');
+
+            const openDate = new Date(capsule.open_date);
+            document.getElementById('openDate').textContent = openDate.toLocaleDateString('tr-TR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            // Show media if exists
+            if (capsule.media_url) {
+                document.getElementById('mediaLink').href = capsule.media_url;
+                document.getElementById('mediaLink').textContent = capsule.media_url;
+                document.getElementById('mediaSection').classList.remove('hidden');
+            }
+
+            document.getElementById('unlockedState').classList.remove('hidden');
+        }
+
+        function showError(message) {
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('errorState').classList.remove('hidden');
+            document.getElementById('errorMessage').textContent = message;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hediyeniz - GiftCapsule</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        .gradient-bg {
+            background-color: #9CBBFC;
+        }
+        .card-birthday {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+        .card-love {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        }
+        .card-celebration {
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white bg-opacity-10 backdrop-blur-sm border-b border-white border-opacity-20 relative z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-xl md:text-2xl font-bold text-yellow-50">
+                    GiftCapsule
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex gap-6">
+                    <a href="gift.html" class="text-yellow-50 hover:text-blue-800 transition font-medium">Hediye Gönder</a>
+                    <a href="capsule.html" class="text-yellow-50 hover:text-blue-800 transition font-medium">Zaman Kapsülü</a>
+                    <a href="musicjar.html" class="text-yellow-50 hover:text-blue-800 transition font-medium">MusicJar</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn"
+                    class="md:hidden text-yellow-50 focus:outline-none p-2 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu"
+                class="hidden md:hidden absolute top-full left-0 w-full bg-[#8baaf0] backdrop-blur-md shadow-xl border-t border-white border-opacity-20">
+                <div class="flex flex-col p-4 space-y-4">
+                    <a href="gift.html"
+                        class="text-yellow-50 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition font-medium block">
+                        🎁 Hediye Gönder
+                    </a>
+                    <a href="capsule.html"
+                        class="text-yellow-50 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition font-medium block">
+                        ⏳ Zaman Kapsülü
+                    </a>
+                    <a href="musicjar.html"
+                        class="text-yellow-50 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition font-medium block">
+                        🎵 MusicJar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="container mx-auto px-4 py-8 md:py-16 text-center">
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 max-w-md mx-auto">
+            <div class="animate-spin rounded-full h-12 w-12 md:h-16 md:w-16 border-b-4 border-blue-800 mx-auto mb-4"></div>
+            <p class="text-sm md:text-base text-gray-600">Hediyeniz yükleniyor...</p>
+        </div>
+    </div>
+
+    <!-- Gift Card (Hidden by default) -->
+    <div id="giftCard" class="hidden container mx-auto px-4 py-6 md:py-8 max-w-2xl">
+        <div id="cardContainer" class="rounded-2xl shadow-2xl p-6 md:p-8 lg:p-12">
+
+            <!-- Card Header -->
+            <div class="text-center mb-6 md:mb-8">
+                <div id="cardEmoji" class="text-5xl md:text-6xl mb-3 md:mb-4">🎁</div>
+                <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-2">
+                    Merhaba <span id="recipientName"></span>!
+                </h1>
+                <p class="text-base md:text-lg lg:text-xl text-gray-700">
+                    <span id="senderName"></span> sana özel bir hediye gönderdi
+                </p>
+            </div>
+
+            <!-- Message Card -->
+            <div class="bg-white bg-opacity-80 rounded-lg p-4 md:p-6 mb-6 md:mb-8">
+                <p id="giftMessage" class="text-gray-800 text-base md:text-lg leading-relaxed whitespace-pre-wrap text-center break-words">
+                </p>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center text-gray-700">
+                <p class="text-xs md:text-sm">
+                    <span id="createdDate"></span> tarihinde gönderildi
+                </p>
+                <p class="text-xs mt-2 opacity-75">
+                    GiftCapsule ile sevgiyle gönderildi
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Error State (Hidden by default) -->
+    <div id="errorState" class="hidden container mx-auto px-4 py-8 md:py-16 text-center">
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 max-w-md mx-auto">
+            <div class="text-5xl md:text-6xl mb-4">😢</div>
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-2">Hediye Bulunamadı</h2>
+            <p id="errorMessage" class="text-sm md:text-base text-gray-600">
+                Üzgünüz, bu hediye bulunamadı veya bir hata oluştu.
+            </p>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
+
+    <script>
+        // Get gift ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const giftId = urlParams.get('id');
+
+        if (!giftId) {
+            showError('Hediye ID\'si bulunamadı');
+        } else {
+            loadGift(giftId);
+        }
+
+        async function loadGift(id) {
+            try {
+                const response = await fetch(`http://localhost:5000/api/gifts/${id}`);
+
+                if (!response.ok) {
+                    throw new Error('Hediye bulunamadı');
+                }
+
+                const gift = await response.json();
+
+                // Hide loading, show gift
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('giftCard').classList.remove('hidden');
+
+                // Populate gift data
+                document.getElementById('recipientName').textContent = gift.recipient_name;
+                document.getElementById('senderName').textContent = gift.sender_name;
+                document.getElementById('giftMessage').textContent = gift.message;
+
+                // Format date
+                const date = new Date(gift.created_at);
+                document.getElementById('createdDate').textContent = date.toLocaleDateString('tr-TR');
+
+                // Apply card template
+                const cardContainer = document.getElementById('cardContainer');
+                const cardEmoji = document.getElementById('cardEmoji');
+
+                switch(gift.card_template) {
+                    case 'birthday':
+                        cardContainer.classList.add('card-birthday');
+                        cardEmoji.textContent = '🎂';
+                        break;
+                    case 'love':
+                        cardContainer.classList.add('card-love');
+                        cardEmoji.textContent = '❤️';
+                        break;
+                    case 'celebration':
+                        cardContainer.classList.add('card-celebration');
+                        cardEmoji.textContent = '🎉';
+                        break;
+                    default:
+                        cardContainer.classList.add('card-celebration');
+                }
+
+                // Mark as viewed
+                await fetch(`http://localhost:5000/api/gifts/${id}/view`, {
+                    method: 'PUT'
+                });
+
+                // Trigger confetti
+                triggerConfetti();
+
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+
+        function showError(message) {
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('errorState').classList.remove('hidden');
+            document.getElementById('errorMessage').textContent = message;
+        }
+
+        function triggerConfetti() {
+            // Initial burst
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            // Side bursts
+            setTimeout(() => {
+                confetti({
+                    particleCount: 50,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                confetti({
+                    particleCount: 50,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+            }, 250);
+        }
+    </script>
+</body>
+</html>

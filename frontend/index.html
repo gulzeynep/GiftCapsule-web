@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hediye Kapsülü - Dijital Hediye, Zaman Kapsülü ve Şarkı Kavanozu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* ===== GRADIENT ARKA PLAN ===== */
+        .gradient-bg {
+            /*           background: linear-gradient(135deg, #bd97f2 0%, #E8B4B8 100%);
+       */
+            background-color: #9CBBFC;
+        }
+
+        /* ===== KART HOVER EFEKTİ ===== */
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ===== DOODLE SVG ANİMASYONU ===== */
+        .doodle-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+
+<body class="gradient-bg min-h-screen">
+
+    <!-- ===== NAVİGASYON BARI ===== -->
+    <nav class="bg-white bg-opacity-10 backdrop-blur-sm border-b border-white border-opacity-20 relative z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="index.html" class="text-2xl font-bold text-yellow-50">
+                    GiftCapsule
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex gap-6">
+                    <a href="gift.html" class="text-yellow-50 hover:text-blue-800 transition font-medium">Hediye
+                        Gönder</a>
+                    <a href="capsule.html" class="text-yellow-50 hover:text-blue-800 transition font-medium">Zaman
+                        Kapsülü</a>
+                    <a href="musicjar.html"
+                        class="text-yellow-50 hover:text-blue-800 transition font-medium">MusicJar</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn"
+                    class="md:hidden text-yellow-50 focus:outline-none p-2 rounded-lg hover:bg-white hover:bg-opacity-10 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu"
+                class="hidden md:hidden absolute top-full left-0 w-full bg-[#8baaf0] backdrop-blur-md shadow-xl border-t border-white border-opacity-20">
+                <div class="flex flex-col p-4 space-y-4">
+                    <a href="gift.html"
+                        class="text-yellow-50 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition font-medium block">
+                        🎁 Hediye Gönder
+                    </a>
+                    <a href="capsule.html"
+                        class="text-yellow-50 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition font-medium block">
+                        ⏳ Zaman Kapsülü
+                    </a>
+                    <a href="musicjar.html"
+                        class="text-yellow-50 hover:text-white hover:bg-white hover:bg-opacity-10 rounded-lg p-2 transition font-medium block">
+                        🎵 MusicJar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+    <!-- ===== HERO BÖLÜMÜ ===== -->
+    <div class="container mx-auto px-4 py-16">
+
+        <!-- Başlık ve Açıklama -->
+        <div class="text-center mb-16">
+            <h1 class="text-5xl md:text-6xl font-bold text-yellow-50 mb-4">
+                GiftCapsule
+            </h1>
+            <p class="text-xl md:text-2xl text-yellow-50 opacity-90">
+                Dijital Hediye, Zaman Kapsülü ve MusicJar
+            </p>
+            <p class="mt-4 text-lg text-yellow-50 opacity-80">
+                Sevdiklerinize özel anılar oluşturun
+            </p>
+        </div>
+
+        <!-- ===== ÖZELLİK KARTLARI (TOZ PEMBE) ===== -->
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+
+            <!-- ===== 1. DİJİTAL HEDİYE KARTI ===== -->
+            <div class="card-hover bg-blue-100 rounded-2xl shadow-xl p-8 text-center cursor-pointer"
+                onclick="location.href='gift.html'">
+
+                <!-- Doodle SVG İkon - Hediye Kutusu -->
+                <div class="flex justify-center mb-4">
+                    <svg class="w-24 h-24 doodle-icon" viewBox="0 0 100 100" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <!-- Hediye Kutusu Gövdesi -->
+                        <rect x="20" y="40" width="60" height="45" stroke="#021132" stroke-width="3" fill="#E6EEFE"
+                            stroke-linecap="round" stroke-linejoin="round" rx="3" />
+
+                        <!-- Hediye Kutusu Kapağı -->
+                        <path d="M 15 40 L 85 40 L 80 30 L 20 30 Z" stroke="#021132" stroke-width="3" fill="#E6EEFE"
+                            stroke-linecap="round" stroke-linejoin="round" />
+
+                        <!-- Kurdele - Dikey -->
+                        <line x1="50" y1="30" x2="50" y2="85" stroke="#021132" stroke-width="3"
+                            stroke-linecap="round" />
+
+                        <!-- Kurdele - Yatay -->
+                        <line x1="20" y1="55" x2="80" y2="55" stroke="#021132" stroke-width="3"
+                            stroke-linecap="round" />
+
+                        <!-- Fiyonk Sol -->
+                        <ellipse cx="38" cy="28" rx="8" ry="5" stroke="#021132" stroke-width="2.5" fill="#E6EEFE" />
+
+                        <!-- Fiyonk Sağ -->
+                        <ellipse cx="62" cy="28" rx="8" ry="5" stroke="#021132" stroke-width="2.5" fill="#E6EEFE" />
+
+                        <!-- Fiyonk Merkez -->
+                        <circle cx="50" cy="28" r="4" stroke="#021132" stroke-width="2.5" fill="#E6EEFE" />
+                    </svg>
+                </div>
+
+                <h2 class="text-2xl font-bold text-blue-900 mb-4">Dijital Hediye</h2>
+                <p class="text-blue-800 mb-6">
+                    Sevdiklerinize özel mesajlar ve kartlarla dijital hediye gönderin.
+                    Doğum günü, yıldönümü veya özel günler için mükemmel!
+                </p>
+                <button
+                    class="bg-yellow-50 text-blue-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-200 transition">
+                    Hediye Gönder
+                </button>
+            </div>
+
+            <!-- ===== 2. ZAMAN KAPSÜLÜ KARTI ===== -->
+            <div class="card-hover bg-blue-100 rounded-2xl shadow-xl p-8 text-center cursor-pointer"
+                onclick="location.href='capsule.html'">
+
+                <!-- Doodle SVG İkon - Saat -->
+                <div class="flex justify-center mb-4">
+                    <svg class="w-24 h-24 doodle-icon" viewBox="0 0 100 100" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <!-- Saat Dış Çerçeve -->
+                        <circle cx="50" cy="50" r="35" stroke="#021132" stroke-width="3" fill="#E6EEFE"
+                            stroke-linecap="round" />
+
+                        <!-- Saat İç Çerçeve (detay) -->
+                        <circle cx="50" cy="50" r="32" stroke="#021132" stroke-width="1.5" stroke-dasharray="3 3" />
+
+                        <!-- Saat 12, 3, 6, 9 İşaretleri -->
+                        <line x1="50" y1="18" x2="50" y2="23" stroke="#021132" stroke-width="2.5" />
+                        <line x1="82" y1="50" x2="77" y2="50" stroke="#021132" stroke-width="2.5" />
+                        <line x1="50" y1="82" x2="50" y2="77" stroke="#021132" stroke-width="2.5" />
+                        <line x1="18" y1="50" x2="23" y2="50" stroke="#021132" stroke-width="2.5" />
+
+                        <!-- Akrep (Kısa İbre) -->
+                        <line x1="50" y1="50" x2="50" y2="35" stroke="#021132" stroke-width="3.5"
+                            stroke-linecap="round" />
+
+                        <!-- Yelkovan (Uzun İbre) -->
+                        <line x1="50" y1="50" x2="65" y2="50" stroke="#021132" stroke-width="2.5"
+                            stroke-linecap="round" />
+
+                        <!-- Merkez Nokta -->
+                        <circle cx="50" cy="50" r="3.5" fill="#021132" />
+
+
+                    </svg>
+                </div>
+
+                <h2 class="text-2xl font-bold text-blue-900 mb-4">Zaman Kapsülü</h2>
+                <p class="text-blue-800 mb-6">
+                    Gelecekteki kendinize veya sevdiklerinize mesaj bırakın.
+                    Belirlediğiniz tarihte açılacak anılarınızı saklayın.
+                </p>
+                <button
+                    class="bg-yellow-50 text-blue-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-200 transition">
+                    Kapsül Oluştur
+                </button>
+            </div>
+
+            <!-- ===== 3. MUSICJAR KARTI ===== -->
+            <div class="card-hover bg-blue-100 rounded-2xl shadow-xl p-8 text-center cursor-pointer"
+                onclick="location.href='musicjar.html'">
+
+                <!-- Doodle SVG İkon - Müzik Notu -->
+                <div class="flex justify-center mb-4">
+                    <svg class="w-24 h-24 doodle-icon" viewBox="0 0 100 100" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <!-- Sol Nota Sapı -->
+                        <line x1="35" y1="70" x2="35" y2="25" stroke="#021132" stroke-width="3"
+                            stroke-linecap="round" />
+
+                        <!-- Sağ Nota Sapı -->
+                        <line x1="55" y1="65" x2="55" y2="20" stroke="#021132" stroke-width="3"
+                            stroke-linecap="round" />
+
+                        <!-- Bağlantı Çizgisi (üst) -->
+                        <path d="M 35 25 Q 40 22 55 20" stroke="#021132" stroke-width="3" fill="none"
+                            stroke-linecap="round" />
+
+                        <!-- Bağlantı Çizgisi (alt) -->
+                        <path d="M 35 32 Q 40 29 55 27" stroke="#021132" stroke-width="2.5" fill="none"
+                            stroke-linecap="round" />
+
+                        <!-- Sol Nota Başı -->
+                        <ellipse cx="32" cy="73" rx="8" ry="6" fill="#021132" stroke="#021132" stroke-width="2"
+                            transform="rotate(-20 32 73)" />
+
+                        <!-- Sağ Nota Başı -->
+                        <ellipse cx="52" cy="68" rx="8" ry="6" fill="#021132" stroke="#021132" stroke-width="2"
+                            transform="rotate(-20 52 68)" />
+
+                        <!-- Dekoratif Müzik Dalgaları -->
+                        <path d="M 65 35 Q 70 32 75 35" stroke="#021132" stroke-width="2" fill="none"
+                            stroke-linecap="round" opacity="0.6" />
+
+                        <path d="M 68 42 Q 73 39 78 42" stroke="#021132" stroke-width="2" fill="none"
+                            stroke-linecap="round" opacity="0.6" />
+
+                        <path d="M 65 49 Q 70 46 75 49" stroke="#021132" stroke-width="2" fill="none"
+                            stroke-linecap="round" opacity="0.6" />
+                    </svg>
+                </div>
+
+                <h2 class="text-2xl font-bold text-blue-900 mb-4">MusicJar</h2>
+                <p class="text-blue-800 mb-6">
+                    Ruh halinize göre müzik keşfedin. Mutlu, hüzünlü, romantik veya
+                    enerjik müzikler için kavanozlardan birini seçin!
+                </p>
+                <button
+                    class="bg-yellow-50 text-blue-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-200 transition">
+                    Müzik Keşfet
+                </button>
+            </div>
+
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <div class="text-center mt-16 text-white opacity-75">
+            <p class="text-sm">
+                © 2025 GiftCapsule - Özel anılarınız için
+            </p>
+        </div>
+    </div>
+
+</body>
+
+</html>
